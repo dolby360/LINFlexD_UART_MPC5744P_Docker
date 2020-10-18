@@ -28,9 +28,7 @@
 ##########
 
 # Error out if PROJ_NAME isn't defined.
-ifndef PROJ_NAME
-$(error PROJ_NAME is undefined)
-endif
+PROJ_NAME=example
 
 # Determine the Project's Directory
 SRC_DIR:=/S32DS/build
@@ -38,9 +36,9 @@ SRC_DIR:=/S32DS/build
 S32DS_BUILD_TOOLS:=/S32DS/build_tools
 # Include board configuration
 
-#### Start MPC5744P
+#### Start MPC5748G
 CPU=e200z4
-SYMBOLS += MPC574xP
+SYMBOLS += MPC574xG
 
 # Startup Assembly
 SRC_S += ${realpath ${SRC_DIR}/Project_Settings/Startup_Code/startup.S}
