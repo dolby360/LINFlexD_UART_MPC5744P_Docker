@@ -28,7 +28,7 @@ extern void _start(void);
 #define TARGET_CORES (CPU1_ENABLED)
 #elif defined(TURN_ON_CPU2)
 #define TARGET_CORES (CPU2_ENABLED)
-#else
+#else 
 #error "Neither core is selected"
 #endif /* defined(CPU0) && defined(CPU1) && defined(CPU2) */
 #define RCHW_VAL (MPC57xx_ID | TARGET_CORES)
@@ -49,3 +49,9 @@ const uint32_t __attribute__ ((section(".cpu2_reset_vector"))) RCHW2_2 = (uint32
 #endif
 #endif
 #endif /* defined(START_FROM_FLASH) */
+
+
+
+
+
+
