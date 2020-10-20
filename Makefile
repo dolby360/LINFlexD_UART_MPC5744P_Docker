@@ -31,14 +31,15 @@
 PROJ_NAME=example
 
 # Determine the Project's Directory
-SRC_DIR:=/S32DS/build
+SRC_DIR:=/mnt/c/argus/idps_main/LINFlexD_UART_MPC5744P_Docker
 # Determine the DEVKIT-Makefile directory.
 S32DS_BUILD_TOOLS:=/S32DS/build_tools
 # Include board configuration
 
 #### Start MPC5748G
 CPU=e200z4
-SYMBOLS += MPC574xG
+SYMBOLS += MPC574xP
+SYMBOLS += TURN_ON_CPU0
 
 # Startup Assembly
 SRC_S += ${realpath ${SRC_DIR}/Project_Settings/Startup_Code/startup.S}
@@ -169,6 +170,8 @@ clean:
 	-${RM} ${BIN}
 	-${RM} ${S19}
 	-${RM} ${OBJS}
+	-${RM} src/*.args
+	-${RM} Project_Settings/Startup_Code/*.args
 	-${RM} ${BIN_ROOT}.map
 
 %.o: %.c
