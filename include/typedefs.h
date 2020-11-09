@@ -35,7 +35,7 @@
     typedef volatile uint16_t vuint16_t;
 
     typedef volatile int32_t vint32_t;
-    typedef volatile uint32_t vuint32_t;
+    typedef volatile uint32_t vuint32_t;    
 
 #elif defined (__MWERKS__)    /* Metrowerk CodeWarrior */
     #include <stdint.h>
@@ -117,3 +117,5 @@ typedef unsigned long long uint64_t;
  *  maintenance and support of this software
  *
  ********************************************************************/
+
+

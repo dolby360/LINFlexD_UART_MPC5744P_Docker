@@ -7,7 +7,7 @@
 /*         your isr name extern like the example below:                      */
 /*                       extern void MyPeripheralISR(void);                  */
 /*                                                                           */
-/*****************************************************************************/
+/*****************************************************************************/	
 /* REV      AUTHOR        DATE        DESCRIPTION OF CHANGE                  */
 /* ---   -----------    ----------    ---------------------                  */
 /* 1.0	  S Mihalik     03 Aug 2015   Initial version                        */
@@ -23,7 +23,7 @@ void dummy 						  (void);
 /*========================================================================*/
 
 const uint32_t __attribute__ ((section (".intc_vector_table"))) IntcIsrVectorTable[] = {
-
+    
 (uint32_t) &dummy, /* Vector #   0 Software settable flag 0 INTC (Software) */
 (uint32_t) &dummy, /* Vector #   1 Software settable flag 1 INTC (Software) */
 (uint32_t) &dummy, /* Vector #   2 Software settable flag 2 INTC (Software) */
@@ -124,7 +124,7 @@ const uint32_t __attribute__ ((section (".intc_vector_table"))) IntcIsrVectorTab
 (uint32_t) &dummy, /* Vector #  97 Reserved for eDMA Channel 44 */
 (uint32_t) &dummy, /* Vector #  98 Reserved for eDMA Channel 45 */
 (uint32_t) &dummy, /* Vector #  99 Reserved for eDMA Channel 46 */
-
+	
 (uint32_t) &dummy, /* Vector # 100 Reserved for eDMA Channel 47 */
 (uint32_t) &dummy, /* Vector # 101 Reserved for eDMA Channel 48 */
 (uint32_t) &dummy, /* Vector # 102 Reserved for eDMA Channel 49 */
@@ -528,7 +528,7 @@ const uint32_t __attribute__ ((section (".intc_vector_table"))) IntcIsrVectorTab
 (uint32_t) &dummy, /* Vector # 497 ADC_ER ADC_0 */
 (uint32_t) &dummy, /* Vector # 498 ADC_WD ADC_0 */
 (uint32_t) &dummy, /* Vector # 499 Reserved for ADC ADC_0 */
-
+	
 (uint32_t) &dummy, /* Vector # 500 ADC_EOC ADC_1 */
 (uint32_t) &dummy, /* Vector # 501 ADC_ER ADC_1 */
 (uint32_t) &dummy, /* Vector # 502 ADC_WD ADC_1 */
@@ -772,3 +772,4 @@ const uint32_t __attribute__ ((section (".intc_vector_table"))) IntcIsrVectorTab
 void dummy (void) {   /* Dummy ISR vector to trap undefined ISRs */
     while (1) {};  /* Wait forever or for watchdog timeout */
 }
+

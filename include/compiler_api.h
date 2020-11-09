@@ -18,7 +18,6 @@
 
 #ifdef __GNUC__   /* GCC */
 #define PPCASM             __asm__
-#define VEC_ALIGN          PPCASM (" .align 4 ")
 #define MFSPR( rn )        ({unsigned int rval; PPCASM volatile("mfspr %0," stringify(rn) : "=r" (rval)); rval;})
 #define MTSPR(rn, v)       PPCASM volatile("mtspr " stringify(rn) ",%0" : : "r" (v))
 #endif
@@ -26,7 +25,6 @@
 #ifdef __ghs__    /* GreenHills */
 #include <ppc_ghs.h>    /* for intrinsic functions only */
 #define PPCASM   asm
-#define VEC_ALIGN          PPCASM (" .skip 0x0C ")
 #define MFSPR( spr )       __MFSPR( spr )
 #define MTSPR( spr, val )  __MTSPR( spr, val )
 #endif
@@ -34,9 +32,10 @@
 #ifdef __DCC__ /* Diab */
 #include <diab/ppcasm.h>    /* for intrinsic functions only */
 #define PPCASM   asm
-#define VEC_ALIGN          PPCASM (" .align 4 ")
 #define MFSPR( spr )       __mfspr( spr )
 #define MTSPR( spr, val )  __mtspr( spr, val )
 #endif
+
+#define VEC_ALIGN          PPCASM (" .align 4 ")
 
 #endif

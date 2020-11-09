@@ -10,7 +10,7 @@
 ;#*           accumulator, and prologue and epilogue must be modified.     */
 ;#=========================================================================*/
     .globl   IVOR4_Handler
-
+    
 #ifdef __ghs__
     .section    .vletext, axv
     .vle

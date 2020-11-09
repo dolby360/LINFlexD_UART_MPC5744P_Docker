@@ -1,4 +1,4 @@
-/* main.c - UART example for MPC5744P */
+/* main.c - Hello World example for MPC5744P */
 /* Description:  Measures eTimer pulse/period measurement */
 /* Rev 1 Sept 06 2016 D Chung - initial version */
 /* Copyright NXP Semiconductor, Inc 2016 All rights reserved. */
@@ -30,21 +30,29 @@ supplied under this Agreement.
 * Version           1.0
 * Date              Sept-6-2016
 * Classification    General Business Information
-* Brief            	This example uses the UART function of the LINFlexD to transmit
-* 					messages to PC UART terminal.
-*
+* Brief             Produces MPC5744P CLKOUT
 ********************************************************************************
 * Detailed Description:
-* LINFlexD_UART example. Uses LINFlexD_1 to communicate to computer terminal like TeraTerm. Connect USB to PC.
-* Sends a string to the computer terminal.
+* MPC5744P's default clock source is 16 MHz IRCOSC.  This code example
+* divides IRCOSC by 10 for output frequency of 1.6 MHz.
+* Configures MPC5744P CLKOUT signal to 1.6 MHz. Connect to LED so LED
+* flashes at frequency of CLKOUT. Onboard red RGB turns on to let user
+* know program is running, but does not flash.
+*
 * ------------------------------------------------------------------------------
 * Test HW:         XDEVKIT-MPC5744P
 * MCU:             MPC5744P
-* Terminal:        19200, 8N1, None
-* Fsys:            160 MHz PLL on 40MHz external oscillator
+* Terminal:        None
+* Fsys:            16 MHz IRC
 * Debugger:        OpenSDA
 * Target:          FLASH
-* EVB connection:  None
+* EVB connection:  Connect CLKOUT (PB6 - J1_16) to oscilloscope or any external component
+* 					such as an external LED. Onboard RGB LED does not support external connection.
+* 					If external LED used, connect one end to J1_16 and the other to GND (J2_13),
+* 					in series with current-limiting resistor (typically 330 ohm).  The external LED will
+* 					flash at the CLKOUT frequency but if frequency is fast, the naked eye
+* 					will perceive the flash as a PWM, meaning the LED will be seen as on
+* 					at a certain brightness.
 *
 ********************************************************************************
 Revision History:
@@ -52,49 +60,30 @@ Version  Date         Author  			Description of Changes
 1.0      Sept-06-2016  David Chung	  	Initial version
 
 *******************************************************************************/
-
 #include "derivative.h" /* include peripheral declarations */
-#include "project.h"
-#include "linflexd_uart.h"
-#include "mode_entry.h"
-#include "gpio.h"
-
-#define KEY_VALUE1 0x5AF0ul
-#define KEY_VALUE2 0xA50Ful
+#include "project.h" /* Board Configuration */
 
 extern void xcptn_xmpl(void);
-void peri_clock_gating(void);
+
+void memory_config_16mhz(void);
+void clock_out_FIRC(void);
 
 __attribute__ ((section(".text")))
 int main(void)
 {
+	int counter = 0;
+	
 	xcptn_xmpl ();              /* Configure and Enable Interrupts */
 
-	peri_clock_gating();       /* Config gating/enabling peri. clocks for modes*/
-                             /* Configuraiton occurs after mode transition */
-	system160mhz();            /* sysclk=160MHz, dividers configured, mode trans*/
+	memory_config_16mhz(); /* Configure wait states, flash master access, etc. */
 
-	initGPIO();
+	SIUL2.MSCR[PC11].B.OBE = 1; /* Pad PC11 - Red LED. */
 
-	initLINFlexD_1(80,19200);
+	clock_out_FIRC();           /* Pad PB6 = CLOCKOUT = FIRC / 10 */
 
-	testLINFlexD_1();            /* Send test message to PC terminal.*/
-
-	for(;;); //Loop forever
-
+	for(;;) {	   
+	   	counter++;
+	}
+	
 	return 0;
-}
-
-/*****************************************************************************/
-/* peri_clock_gating                                                         */
-/* Description: Configures enabling clocks to peri modules or gating them off*/
-/*              Default PCTL[RUN_CFG]=0, so by default RUN_PC[0] is selected.*/
-/*              RUN_PC[0] is configured here to gate off all clocks.         */
-/*****************************************************************************/
-
-void peri_clock_gating (void) {
-  MC_ME.RUN_PC[0].R = 0x00000000;  /* gate off clock for all RUN modes */
-  MC_ME.RUN_PC[1].R = 0x000000FE;  /* config. peri clock for all RUN modes */
-
-  MC_ME.PCTL91.B.RUN_CFG = 0x1; //LINFlexD_1: Select peripheral config RUN_PC[1]. No LINFlex_D_2 on Panther
 }

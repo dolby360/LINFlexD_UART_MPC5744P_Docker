@@ -10,7 +10,7 @@
  * REV      AUTHOR      DATE       DESCRIPTION OF CHANGE                  *
  * ---   -----------  ---------    ---------------------                  *
  * 0.2      P.A.      16-APR-12     -XBIC and PRAMC modules were added.   *
- *                                  -PWM module name was modified as      *
+ *                                  -PWM module name was modified as      * 
  *                                  FlexPWM (Just in the header file).    *
  *                                  -In FlexPWM, DCHMID, DCHPRI and TCDs  *
  *                                  were arranged in an array.            *
@@ -24,7 +24,7 @@
  *                                  as an array of 2 channels.            *
  *                                  -In the PIT, LDVAL, CVAL, TCTRL,      *
  *                                  TFLG were organized as an array of    *
- *                                  4 timers.                             *
+ *                                  4 timers.                             *   
  *                                  -In the SMPU, EAR and EDR were        *
  *                                  organized as an array of 16 channels. *
  *                                  -In the STM, CCR, CIR and CMP were    *
@@ -35,7 +35,7 @@
  *                                  as an array of 16 channels.           *
  *                                  -In the DSPI, RXFR was organized as   *
  *                                  an array of 5 registers and TXFR was  *
- *                                  organized as an array of 5 registers. *
+ *                                  organized as an array of 5 registers. * 
  *                                  -In the FR, SSR was organized as an   *
  *                                  array of 8 registers. SSCR was        *
  *                                  organized as an array of 4 registers. *
@@ -62,7 +62,7 @@
  *                                  SIUL2 modules.                        *
  *                                  -All the other modules are from the   *
  *                                  previous release.                     *
- *                                                                        *
+ *                                                                        *                                                                          
  * 0.5      P.A.      13-JUN-12     -Generated using the last update of   *
  *                                  of AIPS, C55FMC, LINFlexD, and        *
  *                                  SIUL2 modules.                        *
@@ -74,7 +74,7 @@
  *                                  adding 32 more and decreasing the     *
  *                                  previous memory spot in 128.          *
  *                                  -Next drop of XML files is going to   *
- *                                  include this change.                  *
+ *                                  include this change.                  *                                    
  *                                                                        *
  * 0.7      P.A.      27-JUN-12     -Adding latest files sended by Nick   *
  *                                  Evans.                                *
@@ -86,7 +86,7 @@
  *                                  NCF_E, NCF_TOE, IRQ_ALARM_EN, NMI_EN, *
  *                                  and EOUT_SIG_EN were expanded from    *
  *                                  arrays and they were indexed with     *
- *                                  their corresponding number.           *
+ *                                  their corresponding number.           *                                                 
  *                                                                        *
  * 0.7.3    P.A.      29-JUN-12     -Registers NCFS_CFG, NCFS_CFG, NCF_S, *
  *                                  NCF_E, NCF_TOE, IRQ_ALARM_EN, NMI_EN, *
@@ -182,7 +182,7 @@
  *                                     •	CRC_CSTAT3                    *
  *                                     •	CRC_OUTP3                     *
  *                                                                        *
- * 0.7.19   M.D.      05-Dec-12     -Regenerated from SIDSC database      *
+ * 0.7.19   M.D.      05-Dec-12     -Regenerated from SIDSC database      *                                                              
  *                                  -CLR_A, CLR_B, CLR_C compressed into  *
  *                                   CHANNEL struct                       *
  *                                  -CH_FMSG_DATA, CH_FMSG_CRC,           *
@@ -251,7 +251,7 @@
  *                                    struct {CTRL, PCS, MISRELSW,        *
  *                                    MISREHSW} LB[4]                     *
  *                                                                        *
- * 0.7.21   M.D.      18-Feb-13     -Regenerated from SIDSC database      *
+ * 0.7.21   M.D.      18-Feb-13     -Regenerated from SIDSC database      * 
  *                                                                        *
  * 0.7.22   M.D.      22-Feb-13     -Removed duplicate LINFlexD registers *
  *                                                                        *
@@ -291,7 +291,7 @@
  *                                            vuint32_t ID_EXT:18;        *
  *                                        } B;                            *
  *                                    } ID;                               *
- *                                                                        *
+ *                                                                        * 
  * 0.7.27   M.D.      17-Apr-13     -Corrected reserved memory within FCCU*
  *                                                                        *
  * 1.0.0    M.D.      11-Jun-13     -Updated per RM Rev2                  *
@@ -304,22 +304,22 @@
  *                                   names being resorted to the correct  *
  *                                   order of 31-0 instead of 0-32        *
  *                                                                        *
- * 1.1.0    M.D.      10-Jan-14     -Updated per RM Rev3                  *
- *                                                                        *
- * 1.2.0    M.D.      03-Apr-14     -Updated per RM Rev4                  *
- *                                                                        *
- * 1.2.1    M.D.      03-Apr-14     -Corrected a couple of SIUL@ macros   *
- *                                                                        *
+ * 1.1.0    M.D.      10-Jan-14     -Updated per RM Rev3                  * 
+ *                                                                        * 
+ * 1.2.0    M.D.      03-Apr-14     -Updated per RM Rev4                  * 
+ *                                                                        * 
+ * 1.2.1    M.D.      03-Apr-14     -Corrected a couple of SIUL@ macros   * 
+ *                                                                        * 
  * 5.0.0    M.D.      30-Apr-14     -Regenerated per RM/RDP Rev5          *
- *                                  -Updated Rev to match RM/RDP          *
- *                                                                        *
- * 5.0.1    M.D.      10-Feb-15     -Updated to use typedef format        *
- *                                                                        *
+ *                                  -Updated Rev to match RM/RDP          * 
+ *                                                                        * 
+ * 5.0.1    M.D.      10-Feb-15     -Updated to use typedef format        * 
+ *                                                                        * 
  * 5.0.2    M.D.      16-Feb-15     -Corrected PIT module reserved memory *
- *                                   definitions and removed one from DCL *
- *                                                                        *
+ *                                   definitions and removed one from DCL * 
+ *                                                                        * 
  * 6.0.0    M.D.      30-Oct-15     -Regenerated per RM/RDP Rev6          *
- *                                                                        *
+ *                                                                        * 
  *========================================================================*
  * COPYRIGHT:                                                             *
  *  Freescale Semiconductor, INC. All Rights Reserved. You are hereby     *
@@ -10772,8 +10772,8 @@ typedef union SIUL2_IFCPR_union_tag {  /* SIUL2 Interrupt Filter Clock Prescaler
 } SIUL2_IFCPR_tag;
 
 
-/*******************************************************************************
-*   Unimplemented registers should not be accessed by the user. Refer to the   *
+/*******************************************************************************  
+*   Unimplemented registers should not be accessed by the user. Refer to the   * 
 *     Reference Manual for the implemented SIUL2 MSCR and IMCR registers.      *
 * *****************************************************************************/
 
@@ -10800,8 +10800,8 @@ typedef union SIUL2_MSCR_union_tag {   /* SIUL2 Multiplexed Signal Configuration
 } SIUL2_MSCR_tag;
 
 
-/*******************************************************************************
-*   Unimplemented registers should not be accessed by the user. Refer to the   *
+/*******************************************************************************  
+*   Unimplemented registers should not be accessed by the user. Refer to the   * 
 *     Reference Manual for the implemented SIUL2 MSCR and IMCR registers.      *
 * *****************************************************************************/
 
@@ -10819,7 +10819,7 @@ typedef union SIUL2_IMCR_union_tag {   /* SIUL2 Input Multiplexed Signal Configu
 typedef union SIUL2_GPDO_union_tag {   /* SIUL2 GPIO Pad Data Output Register */
     vuint8_t R;
   struct {
-        vuint8_t  :7;
+        vuint8_t  :7;					 
         vuint8_t PDO:1;					 /* Pad Data Out */
   } B;
 } SIUL2_GPDO_tag;
@@ -10827,7 +10827,7 @@ typedef union SIUL2_GPDO_union_tag {   /* SIUL2 GPIO Pad Data Output Register */
 typedef union SIUL2_GPDI_union_tag {   /* SIUL2 GPIO Pad Data Input Register */
     vuint8_t R;
   struct {
-        vuint8_t  :7;
+        vuint8_t  :7;					 
         vuint8_t PDI:1;					 /* Pad Data In */
   } B;
 } SIUL2_GPDI_tag;

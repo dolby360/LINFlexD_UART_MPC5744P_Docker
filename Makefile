@@ -39,7 +39,7 @@ S32DS_BUILD_TOOLS:=/S32DS/build_tools
 #### Start MPC5748G
 CPU=e200z4
 SYMBOLS += MPC574xP
-SYMBOLS += TURN_ON_CPU0
+# SYMBOLS += TURN_ON_CPU0
 
 # Startup Assembly
 SRC_S += ${realpath ${SRC_DIR}/Project_Settings/Startup_Code/startup.S}
@@ -127,10 +127,13 @@ C_FLAGS += $(foreach d, $(SYMBOLS),-D$d)
 C_FLAGS += $(foreach d, $(OPT_FLAGS),-f$d)
 C_FLAGS += $(foreach d, $(MACH_OPTS),-m$d)
 C_FLAGS += -W${WARNINGS}
-C_FLAGS += -g${DEBUG_LVL}
+C_FLAGS += -g3
 C_FLAGS += -specs=${SPECS}
 C_FLAGS += --sysroot="${SYSROOT}"
 C_FLAGS += $(foreach d, $(INCLUDE),-I"$d")
+C_FLAGS += -std=gnu99
+C_FLAGS += -DSTART_FROM_FLASH
+C_FLAGS += -DMPC574xP
 
 # Linker Flags
 LD_FLAGS += $(foreach d, $(SRC_LD),-T"$d")
@@ -171,6 +174,7 @@ clean:
 	-${RM} ${S19}
 	-${RM} ${OBJS}
 	-${RM} src/*.args
+	-${RM} src/*.d
 	-${RM} Project_Settings/Startup_Code/*.args
 	-${RM} ${BIN_ROOT}.map
 

@@ -17,43 +17,53 @@
 *********************************************************************************************/
 void initGPIO(void)
 {
-	/* LEDs on DEVKIT-MPC5744P */
-	SIUL2.MSCR[PC11].B.SSS = 0;			/* Pin functionality as GPIO */
-	SIUL2.MSCR[PC11].B.OBE = 1;          /* Output Buffer Enable on */
-	SIUL2.MSCR[PC11].B.IBE = 0;			/* Input Buffer Enable off */
-	SIUL2.GPDO[PC11].B.PDO = 1;			/* Turn LED off, note that the LEDs are connected backwards 0 for ON, 1 for OFF */
+	/* LEDS on CalypsoEVB */
+	SIUL2.MSCR[98].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[98].B.OBE = 1;          /* Output Buffer Enable on */
+	SIUL2.MSCR[98].B.IBE = 0;			/* Input Buffer Enable off */
+	SIUL2.GPDO[98].B.PDO = 1;			/* Turn LED off, note that the LEDs are connected backwards 0 for ON, 1 for OFF */
 
-	SIUL2.MSCR[PC12].B.SSS = 0;			/* Pin functionality as GPIO */
-	SIUL2.MSCR[PC12].B.OBE = 1;          /* Output Buffer Enable on */
-	SIUL2.MSCR[PC12].B.IBE = 0;			/* Input Buffer Enable off */
-	SIUL2.GPDO[PC12].B.PDO = 1;			/* Turn LED off, note that the LEDs are connected backwards 0 for ON, 1 for OFF */
+	SIUL2.MSCR[99].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[99].B.OBE = 1;          /* Output Buffer Enable on */
+	SIUL2.MSCR[99].B.IBE = 0;			/* Input Buffer Enable off */
+	SIUL2.GPDO[99].B.PDO = 1;			/* Turn LED off, note that the LEDs are connected backwards 0 for ON, 1 for OFF */
 
-	SIUL2.MSCR[PC13].B.SSS = 0;			/* Pin functionality as GPIO */
-	SIUL2.MSCR[PC13].B.OBE = 1;          /* Output Buffer Enable on */
-	SIUL2.MSCR[PC13].B.IBE = 0;			/* Input Buffer Enable off */
-	SIUL2.GPDO[PC13].B.PDO = 1;			/* Turn LED off, note that the LEDs are connected backwards 0 for ON, 1 for OFF */
+	SIUL2.MSCR[100].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[100].B.OBE = 1;          /* Output Buffer Enable on */
+	SIUL2.MSCR[100].B.IBE = 0;			/* Input Buffer Enable off */
+	SIUL2.GPDO[100].B.PDO = 1;			/* Turn LED off, note that the LEDs are connected backwards 0 for ON, 1 for OFF */
 
-	/* Buttons on PantherEVB. No general purpose push buttons on MPC5744P 144LQFPEVB so map to MPC57xxMB. Same
-	 * scheme as the LEDs: can be any GPIO pin but map ones closest to MB push buttons.
-	 */
-	SIUL2.MSCR[PF12].B.SSS = 0;			/* Pin functionality as GPIO */
-	SIUL2.MSCR[PF12].B.OBE = 0;          /* Output Buffer Enable off */
-	SIUL2.MSCR[PF12].B.IBE = 1;			/* Input Buffer Enable on */
+	SIUL2.MSCR[101].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[101].B.OBE = 1;          /* Output Buffer Enable on */
+	SIUL2.MSCR[101].B.IBE = 0;			/* Input Buffer Enable off */
+	SIUL2.GPDO[101].B.PDO = 1;			/* Turn LED off, note that the LEDs are connected backwards 0 for ON, 1 for OFF */
 
-	SIUL2.MSCR[PF13].B.SSS = 0;			/* Pin functionality as GPIO */
-	SIUL2.MSCR[PF13].B.OBE = 0;          /* Output Buffer Enable off */
-	SIUL2.MSCR[PF13].B.IBE = 1;			/* Input Buffer Enable on */
+	/* Buttons on CalypsoEVB */
+	SIUL2.MSCR[1].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[1].B.OBE = 0;          /* Output Buffer Enable off */
+	SIUL2.MSCR[1].B.IBE = 1;			/* Input Buffer Enable on */
 
+	SIUL2.MSCR[2].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[2].B.OBE = 0;          /* Output Buffer Enable off */
+	SIUL2.MSCR[2].B.IBE = 1;			/* Input Buffer Enable on */
+
+	SIUL2.MSCR[89].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[89].B.OBE = 0;          /* Output Buffer Enable off */
+	SIUL2.MSCR[89].B.IBE = 1;			/* Input Buffer Enable on */
+
+	SIUL2.MSCR[91].B.SSS = 0;			/* Pin functionality as GPIO */
+	SIUL2.MSCR[91].B.OBE = 0;          /* Output Buffer Enable off */
+	SIUL2.MSCR[91].B.IBE = 1;			/* Input Buffer Enable on */
 /* General purpose output pins for test: */
-	SIUL2.MSCR[PA9].B.SSS = 0;			/* PG7: Pin functionality as GPIO */
-	SIUL2.MSCR[PA9].B.OBE = 1;          /* Output Buffer Enable on */
-	SIUL2.MSCR[PA9].B.IBE = 0;			/* Input Buffer Enable off */
-	SIUL2.GPDO[PA9].B.PDO = 0;			/* Inialize low */
+	SIUL2.MSCR[103].B.SSS = 0;			/* PG7: Pin functionality as GPIO */
+	SIUL2.MSCR[103].B.OBE = 1;          /* Output Buffer Enable on */
+	SIUL2.MSCR[103].B.IBE = 0;			/* Input Buffer Enable off */
+	SIUL2.GPDO[103].B.PDO = 0;			/* Inialize low */
 
-	SIUL2.MSCR[PA10].B.SSS = 0;			/* PG8: Pin functionality as GPIO */
-	SIUL2.MSCR[PA10].B.OBE = 1;          /* Output Buffer Enable on */
-	SIUL2.MSCR[PA10].B.IBE = 0;			/* Input Buffer Enable off */
-	SIUL2.GPDO[PA10].B.PDO = 0;			/* Inialize low */
+	SIUL2.MSCR[104].B.SSS = 0;			/* PG8: Pin functionality as GPIO */
+	SIUL2.MSCR[104].B.OBE = 1;          /* Output Buffer Enable on */
+	SIUL2.MSCR[104].B.IBE = 0;			/* Input Buffer Enable off */
+	SIUL2.GPDO[104].B.PDO = 0;			/* Inialize low */
 
 }
 
@@ -102,26 +112,24 @@ void DebouncedWaitTilHigh(uint16_t GPIO)
 
 }
 
- void clock_out_FMPLL()
+ void clock_out_PLL()
  {
    /* Set Up clock selectors to allow clock out 0 to be viewed */
-   MC_CGM.AC6_SC.B.SELCTL = 2;           /* Select PLL0 (PLL0-sysclk0) */
+   MC_CGM.AC6_SC.B.SELCTL = 2;           /* Select PHI_0 (PLL0-sysclk0) */
    MC_CGM.AC6_DC0.B.DE    = 1;           /* Enable AC6 divider 0 (SYSCLK0)*/
    MC_CGM.AC6_DC0.B.DIV   = 9;           /* Divide by 10 */
 
-   /* Configure Pin for Clock out 0 on PG7 */
-   //SIUL2.MSCR[PG7].R = 0x02000003;       /* SRC=2 (Full drive w/o slew) SSS=3 (CLKOUT_0)*/
-   SIUL2.MSCR[PB6].R = 0x02000001; /* PB6 = 22 */
+   /* Configure Pin for Clock out 0 on PB6 */
+   SIUL2.MSCR[PB6].R = 0x02000001;       /* SRC=2 (Full drive w/o slew) SSS=3 (CLKOUT_0)*/
  }
 
   void clock_out_FIRC()
  {
    /* Set Up clock selectors to allow clock out 0 to be viewed */
-   MC_CGM.AC6_SC.B.SELCTL = 1;            /* Select FIRC */
+   MC_CGM.AC6_SC.B.SELCTL = 0;            /* Select FIRC */
    MC_CGM.AC6_DC0.B.DE    = 1;            /* Enable AC6 divider 0 */
    MC_CGM.AC6_DC0.B.DIV   = 9;            /* Divide by 10 */
 
-   /* Configure Pin for Clock out 0 on PG7 */
-   //SIUL2.MSCR[PG7].R = 0x02000003;        /* PG7 = 103 */
-   SIUL2.MSCR[PB6].R = 0x02000001; /* PB6 = 22 */
+   /* Configure Pin for Clock out 0 on PB6 */
+   SIUL2.MSCR[PB6].R = 0x02000001;        /* PB6 = 22 */
  }

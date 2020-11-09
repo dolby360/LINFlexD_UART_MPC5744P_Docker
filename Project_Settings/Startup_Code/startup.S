@@ -10,6 +10,8 @@
 		.extern   main
 		.extern __SRAM_SIZE
 		.extern __SRAM_BASE_ADDR
+		.extern __LOCAL_DMEM_SIZE
+		.extern __LOCAL_DMEM_BASE_ADDR
 		.extern __DATA_SIZE
 		.extern __DATA_ROM_ADDR
 		.extern __DATA_SRAM_ADDR
@@ -28,13 +30,12 @@
 #endif
 #ifdef __DCC__ /* Diab */
        .section ".startup",4,rx
-#endif
+#endif       
         .globl	_start
 		
 _start:
 
-;#****************************** Turn off SWTs ********************************
-#if defined(DISABLE_SWT0)
+;#****************************** Turn off SWT ********************************
 ;#SWT0
 		e_lis	r4, 0xFC05
 		e_or2i	r4, 0x0000
@@ -48,7 +49,7 @@ _start:
 		e_lis	r3, 0xFF00
 		e_or2i	r3, 0x010A
 		e_stw	r3, 0(r4)
-#endif
+
 ;#********************************* Enable BTB ********************************
 ;# Flush & Enable BTB - Set BBFI bit in BUCSR
 		e_li	r3, 0x201
@@ -97,8 +98,8 @@ _start:
 ;# Init any other CPU register which might be stacked (before being used).
 
 		mtspr	1, r1		;#XER
-		mtcrf	0xFF, r1
-		mtspr	CTR, r1
+	    mtcrf 0xFF, r1
+	    mtspr CTR,  r1
 		mtspr	272, r1		;#SPRG0
 		mtspr	273, r1		;#SPRG1
 		mtspr	274, r1		;#SPRG2
@@ -130,6 +131,23 @@ sram_loop:
     e_stmw      r0,0(r5)            # Write all 32 registers to SRAM
     e_addi      r5,r5,128           # Increment the RAM pointer to next 128bytes
     e_bdnz      sram_loop           # Loop for all of SRAM
+
+;#************************ Initialise Local Data SRAM ECC *********************/
+;# Store number of 128Byte (32GPRs) segments in Counter
+ e_lis       r5, __LOCAL_DMEM_SIZE@h  # Initialize r5 to size of SRAM (Bytes)
+ e_or2i      r5, __LOCAL_DMEM_SIZE@l
+ e_srwi      r5, r5, 0x7         # Divide SRAM size by 128
+ mtctr       r5                  # Move to counter for use with "bdnz"
+
+;# Base Address of the Local SRAM
+ e_lis       r5, __LOCAL_DMEM_BASE_ADDR@h
+ e_or2i      r5, __LOCAL_DMEM_BASE_ADDR@l
+
+;# Fill Local SRAM with writes of 32GPRs
+ldmem_loop:
+    e_stmw      r0,0(r5)            # Write all 32 registers to SRAM
+    e_addi      r5,r5,128           # Increment the RAM pointer to next 128bytes
+    e_bdnz      ldmem_loop          # Loop for all of SRAM
 #endif
     
 ;#*************** Load Initialised Data Values from Flash into RAM ************/
@@ -185,38 +203,37 @@ ROMCPYEND:
 		e_or2i	r6,0x1000
 		mtmsr	r6
 
-#if defined(I_CACHE) && (ICACHE_ENABLE == 1)
+#if (ICACHE_ENABLE == 1)
 ;#****************** Invalidate and Enable the Instruction cache **************
 __icache_cfg:
-		e_li	r5, 0x2
-		mtspr	1011,r5
+        e_li r5, 0x2
+        mtspr 1011,r5
 
-		e_li	r7, 0x4
-		e_li	r8, 0x2
+        e_li r7, 0x4
+        e_li r8, 0x2
 		;#e_lwi r11, 0xFFFFFFFB
 		e_lis	r11,0xFFFF
 		e_or2i	r11,0xFFFB
 
 __icache_inv:
-		mfspr	r9, 1011
-		and.	r10, r7, r9
-		e_beq	__icache_no_abort
-		and.	r10, r11, r9
-		mtspr	1011, r10
-		e_b		__icache_cfg
+        mfspr r9, 1011
+        and.  r10, r7, r9
+        e_beq   __icache_no_abort
+        and.  r10, r11, r9
+        mtspr 1011, r10
+        e_b     __icache_cfg
 
 __icache_no_abort:
-		and.	r10, r8, r9
-		e_bne	__icache_inv
+        and.  r10, r8, r9
+        e_bne __icache_inv
 
-		mfspr	r5, 1011
-		e_ori	r5, r5, 0x0001
-		se_isync
-		;#msync
-		mtspr	1011, r5
+        mfspr r5, 1011
+        e_ori   r5, r5, 0x0001
+        se_isync
+        msync
+        mtspr 1011, r5
 #endif
-
-#if defined(D_CACHE) && (DCACHE_ENABLE == 1)
+#if (DCACHE_ENABLE == 1)
 ;#****************** Invalidate and Enable the Data cache **************
 __dcache_cfg:
         e_li r5, 0x2
@@ -245,7 +262,6 @@ __dcache_no_abort:
         msync
         mtspr 1010, r5
 #endif
-
 ;#****************************** Initialize BSS section ******************************/
 bss_Init:
     e_lis        r9, __BSS_SIZE@h       # Load upper BSS load size (# of bytes) into R9
@@ -278,10 +294,6 @@ bss_Init_end:
 		e_or2i	r2, _SDA2_BASE_@l	;# (provided by linker).
 
 		e_stwu	r0,-64(r1)			;# Terminate stack.
-
-#if defined(HW_INIT)
-;# perform hardware init prior to main
-		e_bl   hw_init
-#endif
+ 
 ;# Jump to Main
 		e_bl	main

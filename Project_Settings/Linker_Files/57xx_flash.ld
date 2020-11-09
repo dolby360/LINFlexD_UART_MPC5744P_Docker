@@ -5,20 +5,25 @@ ENTRY(_start)
 __HEAP_SIZE            = 0 ;
 __STACK_SIZE           = 4096 ;
 
-SRAM_SIZE =  256K;    
+SRAM_SIZE =  384K;    
 /* Define SRAM Base Address */
 SRAM_BASE_ADDR = 0x40000000;
+
+/* Define CPU0 Local Data SRAM Allocation */
+LOCALDMEM_SIZE = 64K;
+/* Define CPU0 Local Data SRAM Base Address */
+LOCALDMEM_BASE_ADDR = 0x50800000;
     
 MEMORY
 {
 
     flash_rchw : org = 0x00FA0000,   len = 0x4
-    cpu0_reset_vec : org = 0x00FA0000+0x10,   len = 0x4
-    cpu1_reset_vec : org = 0x00FA0000+0x14,   len = 0x4
-    cpu2_reset_vec : org = 0x00FA0000+0x04,   len = 0x4      
+    cpu0_reset_vec : org = 0x00FA0004,   len = 0x4
         
-    m_text :	org = 0x1000000, len = 1856K  
-    m_data :	org = 0x40000000,   len = 256K
+    m_text :	org = 0x1000000, len = 2048K  
+    m_data :	org = 0x40000000,   len = 384K
+    
+    local_dmem  : org = 0x50800000,   len = 64K    
 }
 
 
@@ -34,17 +39,6 @@ SECTIONS
         KEEP(*(.cpu0_reset_vector))
     } > cpu0_reset_vec
 
-    .cpu1_reset_vector  : 
-    {
-        KEEP(*(.cpu1_reset_vector))
-    } > cpu1_reset_vec
-
-    .cpu2_reset_vector  : 
-    {
-        KEEP(*(.cpu2_reset_vector))
-    } > cpu2_reset_vec
-
-    /* Note: if you move the 'startup' section shall modify the RCHW2_0 value for the corresponding core in the flashrchw.c file. */
     .startup : ALIGN(0x400)
     {
     __start = . ;
@@ -137,8 +131,8 @@ SECTIONS
     } > m_text
     
     .eh_frame_hdr : { *(.eh_frame_hdr) } > m_text
-    .eh_frame     : { KEEP (*(.eh_frame)) } > m_text    
-   
+    .eh_frame     : { KEEP (*(.eh_frame)) } > m_text
+    
 	.data   : 
 	{
 	  *(.data)
@@ -179,7 +173,7 @@ SECTIONS
     {
       __HEAP = . ;
       PROVIDE (_end = . );
-      PROVIDE (end = . );            
+      PROVIDE (end = . );      
       . += __HEAP_SIZE ;
       __HEAP_END = . ;
       _stack_end = . ;
@@ -187,7 +181,7 @@ SECTIONS
       _stack_addr = . ;
       __SP_INIT = . ;
       . += 4;
-    } > m_data
+    } > local_dmem
  
 /*-------- LABELS USED IN CODE -------------------------------*/
         
@@ -205,7 +199,13 @@ __SDATA_ROM_ADDR = LOADADDR(.sdata);
 __SRAM_SIZE = SRAM_SIZE;
 __SRAM_BASE_ADDR = SRAM_BASE_ADDR;
 
-__BSS_SIZE    = __BSS_END - __BSS_START;      
+__LOCAL_DMEM_SIZE = LOCALDMEM_SIZE;
+__LOCAL_DMEM_BASE_ADDR = LOCALDMEM_BASE_ADDR;
+
+__BSS_SIZE    = __BSS_END - __BSS_START;    
       
 }
+
+
+
 

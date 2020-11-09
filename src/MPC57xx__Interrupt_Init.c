@@ -138,7 +138,7 @@ void InitIVORS (void)
 /* PURPOSE      : This function intializes the INTC for software vector   */
 /*                mode.                                                   */
 /**************************************************************************/
-void InitINTC(void) {
+void InitINTC(void) {   
 
 	uint32_t __attribute__((unused)) temp;
 
@@ -219,16 +219,18 @@ void enableIrq(void) {
 /*                and handle a Interrupt in software vector mode          */
 /**************************************************************************/
 void xcptn_xmpl(void) {
-
+    
     /* Initialise Core IVPR */
     SetIVPR ((unsigned int) &VTABLE);
 #if defined(MPC5777C)
     InitIVORS();
 #endif
     /* Initialize INTC for SW vector mode */
-    InitINTC();
-
+    InitINTC();               
+    
     /* Enable interrupts */
     enableIrq();
 
 }
+
+
